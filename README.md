@@ -114,14 +114,14 @@
 |--------|-----|------|------|------|
 | POST | `/api/auth/signup` | 회원가입 | ❌ | ✅ 완료 |
 | POST | `/api/auth/login` | 로그인 (JWT 발급) | ❌ | ✅ 완료 |
-| GET | `/api/todos?date=` | 할 일 목록 조회 | ✅ | 🚧 진행 중 |
-| POST | `/api/todos` | 할 일 생성 | ✅ | 🚧 진행 중 |
-| PATCH | `/api/todos/{id}` | 할 일 수정 | ✅ | 🚧 진행 중 |
-| DELETE | `/api/todos/{id}` | 할 일 삭제 | ✅ | 🚧 진행 중 |
-| GET | `/api/categories` | 카테고리 목록 조회 | ✅ | 🚧 진행 중 |
-| POST | `/api/categories` | 카테고리 생성 | ✅ | 🚧 진행 중 |
-| PATCH | `/api/categories/{id}` | 카테고리 수정 | ✅ | 🚧 진행 중 |
-| DELETE | `/api/categories/{id}` | 카테고리 삭제 | ✅ | 🚧 진행 중 |
+| GET | `/api/todos?date=` | 할 일 목록 조회 | ✅ | ✅ 완료 |
+| POST | `/api/todos` | 할 일 생성 | ✅ | ✅ 완료 |
+| PATCH | `/api/todos/{id}` | 할 일 수정 | ✅ | ✅ 완료 |
+| DELETE | `/api/todos/{id}` | 할 일 삭제 | ✅ | ✅ 완료 |
+| GET | `/api/categories` | 카테고리 목록 조회 | ✅ | ✅ 완료 |
+| POST | `/api/categories` | 카테고리 생성 | ✅ | ✅ 완료 |
+| PATCH | `/api/categories/{id}` | 카테고리 수정 | ✅ | ✅ 완료 |
+| DELETE | `/api/categories/{id}` | 카테고리 삭제 | ✅ | ✅ 완료 |
 
 > 인증이 필요한 요청은 헤더에 `Authorization: Bearer <token>` 을 포함해야 합니다.
 
@@ -258,6 +258,6 @@ docker compose logs -f web
 
 <div align="center">
 
-**Copyright © 2025 Yestion Team. All rights reserved.**
+**Copyright © 2026 Yestion Team. All rights reserved.**
 
 </div>
