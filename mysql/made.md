@@ -72,3 +72,4 @@ users ──────< categories
 |------|------|
 | `users` 삭제 | 해당 유저의 `todos`, `categories` 전부 삭제 (CASCADE) |
 | `categories` 삭제 | 해당 카테고리의 `todos.category_id` 를 NULL로 변경 (SET NULL) |
+
