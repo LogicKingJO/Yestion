@@ -1,29 +1,42 @@
-/* ===== Yestion - Shared State & Utilities ===== */
+/* ===== Yestion - Shared Utilities & API ===== */
 
-// LocalStorage keys
-const KEY = {
-  USER: 'yestion_user',
-  TODOS: 'yestion_todos',
-  CATEGORIES: 'yestion_categories',
-};
-
-// ---- State helpers ----
-function getUser()       { return JSON.parse(localStorage.getItem(KEY.USER) || 'null'); }
-function saveUser(u)     { localStorage.setItem(KEY.USER, JSON.stringify(u)); }
-function getTodos()      { return JSON.parse(localStorage.getItem(KEY.TODOS) || '[]'); }
-function saveTodos(arr)  { localStorage.setItem(KEY.TODOS, JSON.stringify(arr)); }
-function getCategories() {
-  const defaults = [
-    { id: 'cat-1', name: '운동', color: '#FF6B6B' },
-    { id: 'cat-2', name: '공부', color: '#4ECDC4' },
-    { id: 'cat-3', name: '일상', color: '#FFD93D' },
-  ];
-  return JSON.parse(localStorage.getItem(KEY.CATEGORIES) || JSON.stringify(defaults));
+// ---- Auth storage ----
+function getToken() { return localStorage.getItem('yestion_token'); }
+function saveToken(t) { localStorage.setItem('yestion_token', t); }
+function getUser() { return JSON.parse(localStorage.getItem('yestion_user') || 'null'); }
+function saveUser(u) { localStorage.setItem('yestion_user', JSON.stringify(u)); }
+function clearAuth() {
+  localStorage.removeItem('yestion_token');
+  localStorage.removeItem('yestion_user');
 }
-function saveCategories(arr) { localStorage.setItem(KEY.CATEGORIES, JSON.stringify(arr)); }
 
-// ---- ID generator ----
-function genId() { return 'id-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7); }
+// ---- Auth guard ----
+function requireAuth() {
+  if (!getToken() || !getUser()) {
+    window.location.href = '/pages/auth.html';
+    return false;
+  }
+  return true;
+}
+
+// ---- Authenticated fetch ----
+async function authFetch(url, options = {}) {
+  const token = getToken();
+  const res = await fetch(url, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { 'Authorization': 'Bearer ' + token } : {}),
+      ...(options.headers || {}),
+    },
+  });
+  if (res.status === 401) {
+    clearAuth();
+    window.location.href = '/pages/auth.html';
+    throw new Error('Unauthorized');
+  }
+  return res;
+}
 
 // ---- Date helpers ----
 function todayStr() { return new Date().toISOString().slice(0, 10); }
@@ -47,13 +60,7 @@ function showToast(msg) {
   t._timer = setTimeout(() => t.classList.remove('show'), 2200);
 }
 
-// ---- Auth guard ----
-function requireAuth() {
-  if (!getUser()) { window.location.href = '/pages/auth.html'; return false; }
-  return true;
-}
-
-// ---- Category lookup ----
-function getCatById(id) {
-  return getCategories().find(c => c.id === id) || { name: '기타', color: '#9CA3AF' };
+// ---- HTML escape ----
+function escHtml(s) {
+  return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }

@@ -4,9 +4,16 @@ const now = new Date();
 let curYear  = now.getFullYear();
 let curMonth = now.getMonth();
 let selectedDate = null;
+let allTodos = [];
 
-function escHtml(s) {
-  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+async function init() {
+  try {
+    const res = await authFetch('/api/todos');
+    allTodos = await res.json();
+    renderCalendar();
+  } catch {
+    showToast('데이터 로드 실패');
+  }
 }
 
 function dateStr(y, m, d) {
@@ -14,9 +21,7 @@ function dateStr(y, m, d) {
 }
 
 function renderCalendar() {
-  const todos = getTodos();
   const today = todayStr();
-
   document.getElementById('month-title').textContent = `${curYear}년 ${curMonth + 1}월`;
 
   const body = document.getElementById('cal-body');
@@ -28,30 +33,30 @@ function renderCalendar() {
 
   for (let i = 0; i < startDay; i++) {
     const d = new Date(curYear, curMonth, -startDay + i + 1);
-    addCell(body, d.getDate(), dateStr(d.getFullYear(), d.getMonth(), d.getDate()), true, today, todos);
+    addCell(body, d.getDate(), dateStr(d.getFullYear(), d.getMonth(), d.getDate()), true, today);
   }
   for (let d = 1; d <= last.getDate(); d++) {
-    addCell(body, d, dateStr(curYear, curMonth, d), false, today, todos);
+    addCell(body, d, dateStr(curYear, curMonth, d), false, today);
   }
   const remaining = 7 - ((startDay + last.getDate()) % 7);
   if (remaining < 7) {
     for (let i = 1; i <= remaining; i++) {
       const d = new Date(curYear, curMonth + 1, i);
-      addCell(body, i, dateStr(d.getFullYear(), d.getMonth(), d.getDate()), true, today, todos);
+      addCell(body, i, dateStr(d.getFullYear(), d.getMonth(), d.getDate()), true, today);
     }
   }
 
   if (selectedDate) renderDetail(selectedDate);
 }
 
-function addCell(body, dayNum, ds, otherMonth, today, todos) {
+function addCell(body, dayNum, ds, otherMonth, today) {
   const cell = document.createElement('div');
   cell.className = 'cal-cell' +
     (otherMonth ? ' other-month' : '') +
     (ds === today ? ' today' : '') +
     (ds === selectedDate ? ' selected' : '');
 
-  const dayTodos = todos.filter(t => t.date === ds);
+  const dayTodos = allTodos.filter(t => t.date === ds);
   const done = dayTodos.filter(t => t.done).length;
   const rate = dayTodos.length ? done / dayTodos.length : null;
 
@@ -78,7 +83,7 @@ function selectDate(ds) {
 
 function renderDetail(ds) {
   const panel = document.getElementById('day-detail');
-  const todos = getTodos().filter(t => t.date === ds);
+  const todos = allTodos.filter(t => t.date === ds);
   const label = formatDate(ds);
 
   if (!todos.length) {
@@ -101,7 +106,7 @@ function renderDetail(ds) {
   `;
   const list = panel.querySelector('.day-detail-list');
   todos.forEach(todo => {
-    const cat = getCatById(todo.categoryId);
+    const cat = todo.category || { name: '기타', color: '#9CA3AF' };
     const item = document.createElement('div');
     item.className = 'todo-item';
     item.innerHTML = `
@@ -126,4 +131,4 @@ function changeMonth(delta) {
   renderCalendar();
 }
 
-renderCalendar();
+init();
