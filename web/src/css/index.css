@@ -25,12 +25,21 @@
 
 .todo-section { padding: 0 16px 16px; max-width: 480px; margin: 0 auto; }
 
-.filter-row {
-  display: flex; gap: 8px; overflow-x: auto;
-  padding: 16px 0 8px;
+.filter-wrapper {
+  overflow-x: auto;
   scrollbar-width: none;
 }
-.filter-row::-webkit-scrollbar { display: none; }
+.filter-wrapper::-webkit-scrollbar { display: none; }
+
+.filter-row {
+  display: flex;
+  gap: 8px;
+  padding: 16px 0 8px;
+  justify-content: center;
+  align-items: center;
+  min-width: min-content;
+  margin: 0 auto;
+}
 
 .filter-chip {
   white-space: nowrap;
