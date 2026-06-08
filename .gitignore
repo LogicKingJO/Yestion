@@ -1,5 +1,7 @@
 .env
 mysql/data/
 web/logs/
+web/nginx.conf
+
 
 .claude

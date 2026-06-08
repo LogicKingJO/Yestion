@@ -6,6 +6,11 @@ services:
     restart: unless-stopped
     ports:
       - "3310:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: yestion1234
+      MYSQL_DATABASE: yestion
+      MYSQL_USER: yestion
+      MYSQL_PASSWORD: yestion1234
     volumes:
       - ./mysql/data:/var/lib/mysql
     networks:

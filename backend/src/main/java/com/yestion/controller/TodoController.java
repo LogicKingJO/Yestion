@@ -1,50 +1,54 @@
 package com.yestion.controller;
 
 import com.yestion.dto.TodoDto;
+import com.yestion.entity.User;
+import com.yestion.service.TodoService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
-// TODO: TodoService, 인증 구현 후 주입
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/todos")
+@RequiredArgsConstructor
 public class TodoController {
 
-    // TODO: private final TodoService todoService;
+    private final TodoService todoService;
 
-    // ── GET /api/todos?date=2025-06-08 ───────
+    // GET /api/todos?date=2025-06-08
     @GetMapping
-    public ResponseEntity<List<?>> getTodos(
-            @RequestParam(required = false) String date
-            // TODO: @AuthenticationPrincipal UserDetails userDetails
+    public ResponseEntity<List<TodoDto.Response>> getTodos(
+            @RequestParam(required = false) String date,
+            @AuthenticationPrincipal User user
     ) {
-        // TODO: return ResponseEntity.ok(todoService.getTodos(userId, date));
-        return ResponseEntity.ok(List.of());
+        return ResponseEntity.ok(todoService.getTodos(user, date));
     }
 
-    // ── POST /api/todos ───────────────────────
+    // POST /api/todos
     @PostMapping
-    public ResponseEntity<?> createTodo(@Valid @RequestBody TodoDto.CreateRequest request) {
-        // TODO: return ResponseEntity.ok(todoService.createTodo(userId, request));
-        return ResponseEntity.ok("createTodo 구현 예정");
+    public ResponseEntity<TodoDto.Response> createTodo(
+            @Valid @RequestBody TodoDto.CreateRequest request,
+            @AuthenticationPrincipal User user
+    ) {
+        return ResponseEntity.ok(todoService.createTodo(user, request));
     }
 
-    // ── PATCH /api/todos/{id} ─────────────────
+    // PATCH /api/todos/{id}
     @PatchMapping("/{id}")
-    public ResponseEntity<?> updateTodo(
+    public ResponseEntity<TodoDto.Response> updateTodo(
             @PathVariable Long id,
             @RequestBody TodoDto.UpdateRequest request
     ) {
-        // TODO: return ResponseEntity.ok(todoService.updateTodo(id, request));
-        return ResponseEntity.ok("updateTodo 구현 예정");
+        return ResponseEntity.ok(todoService.updateTodo(id, request));
     }
 
-    // ── DELETE /api/todos/{id} ────────────────
+    // DELETE /api/todos/{id}
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTodo(@PathVariable Long id) {
-        // TODO: todoService.deleteTodo(id);
-        return ResponseEntity.ok("deleteTodo 구현 예정");
+        todoService.deleteTodo(id);
+        return ResponseEntity.ok("삭제되었습니다.");
     }
 }
