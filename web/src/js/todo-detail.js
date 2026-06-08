@@ -41,5 +41,5 @@ function handleSave(e) {
   }
   saveTodos(todos);
   showToast(editId ? '수정되었습니다.' : '할 일이 추가되었습니다!');
-  setTimeout(() => window.location.href = 'index.html', 600);
+  setTimeout(() => window.location.href = '/pages/index.html', 600);
 }

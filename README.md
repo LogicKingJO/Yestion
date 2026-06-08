@@ -110,18 +110,18 @@
 
 ## 🔌 API 목록
 
-| Method | URI | 설명 | 인증 |
-|--------|-----|------|------|
-| POST | `/api/auth/signup` | 회원가입 | ❌ |
-| POST | `/api/auth/login` | 로그인 (JWT 발급) | ❌ |
-| GET | `/api/todos?date=` | 할 일 목록 조회 | ✅ |
-| POST | `/api/todos` | 할 일 생성 | ✅ |
-| PATCH | `/api/todos/{id}` | 할 일 수정 | ✅ |
-| DELETE | `/api/todos/{id}` | 할 일 삭제 | ✅ |
-| GET | `/api/categories` | 카테고리 목록 조회 | ✅ |
-| POST | `/api/categories` | 카테고리 생성 | ✅ |
-| PATCH | `/api/categories/{id}` | 카테고리 수정 | ✅ |
-| DELETE | `/api/categories/{id}` | 카테고리 삭제 | ✅ |
+| Method | URI | 설명 | 인증 | 상태 |
+|--------|-----|------|------|------|
+| POST | `/api/auth/signup` | 회원가입 | ❌ | ✅ 완료 |
+| POST | `/api/auth/login` | 로그인 (JWT 발급) | ❌ | ✅ 완료 |
+| GET | `/api/todos?date=` | 할 일 목록 조회 | ✅ | 🚧 진행 중 |
+| POST | `/api/todos` | 할 일 생성 | ✅ | 🚧 진행 중 |
+| PATCH | `/api/todos/{id}` | 할 일 수정 | ✅ | 🚧 진행 중 |
+| DELETE | `/api/todos/{id}` | 할 일 삭제 | ✅ | 🚧 진행 중 |
+| GET | `/api/categories` | 카테고리 목록 조회 | ✅ | 🚧 진행 중 |
+| POST | `/api/categories` | 카테고리 생성 | ✅ | 🚧 진행 중 |
+| PATCH | `/api/categories/{id}` | 카테고리 수정 | ✅ | 🚧 진행 중 |
+| DELETE | `/api/categories/{id}` | 카테고리 삭제 | ✅ | 🚧 진행 중 |
 
 > 인증이 필요한 요청은 헤더에 `Authorization: Bearer <token>` 을 포함해야 합니다.
 
@@ -129,20 +129,22 @@
 
 ## 🐳 인프라 아키텍처
 
-```
-사용자 브라우저
-      │  HTTPS
-      ▼
- Cloudflare CDN          ← DDoS 방어, HTTPS 자동 적용
-      │  HTTP :80
-      ▼
- nginx 컨테이너           ← 리버스 프록시
-      │
-      ├─ /api/*  ──────→ backend 컨테이너 :8080  (Spring Boot)
-      │
-      └─ /*  ──────────→ web 컨테이너 :80        (정적 파일)
+```mermaid
+graph TD
+    A[👤 사용자 브라우저] -->|HTTPS| B[☁️ Cloudflare CDN\nDDoS 방어 · HTTPS 자동 적용]
+    B -->|Tunnel| C[🚇 Cloudflare Tunnel\n컨테이너]
+    C --> D[🔀 nginx 컨테이너\n리버스 프록시]
+    D -->|/* 정적 파일| E[🌐 web 컨테이너\nnginx · HTML·CSS·JS]
+    D -->|/api/* API 요청| F[⚙️ backend 컨테이너\nSpring Boot :8080]
+    F -->|JDBC| G[(🗄️ mysql 컨테이너\nMySQL 8.0 :3306)]
 
- mysql 컨테이너           ← 데이터베이스 :3310 (로컬 전용)
+    style A fill:#e0e7ff,stroke:#6366f1
+    style B fill:#fff7ed,stroke:#f97316
+    style C fill:#fff7ed,stroke:#f97316
+    style D fill:#f0fdf4,stroke:#22c55e
+    style E fill:#f0fdf4,stroke:#22c55e
+    style F fill:#eff6ff,stroke:#3b82f6
+    style G fill:#fdf4ff,stroke:#a855f7
 ```
 
 | 서비스 | 이미지 | 외부 포트 | 역할 |
@@ -215,15 +217,40 @@ docker compose logs -f web
 
 ---
 
+## 📸 미리보기
+
+<div align="center">
+
+| 로그인 | 홈 | 달력 | 마이페이지 |
+|--------|-----|------|-----------|
+| ![auth](images/auth.png) | ![index](images/index.png) | ![calendar](images/calendar.png) | ![mypage](images/mypage.png) |
+
+</div>
+
+---
+
 ## 👥 팀원
 
 <div align="center">
 
-| 역할 | 이름 | GitHub |
-|------|------|--------|
-| 🎨 Frontend | | |
-| ⚙️ Backend | | |
-| 🗄️ Database | | |
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/gunobo">
+        <img src="https://github.com/gunobo.png" width="80" style="border-radius:50%"/><br/>
+        <b>gunobo</b>
+      </a><br/>
+      🎨 Frontend · ⚙️ Backend
+    </td>
+    <td align="center">
+      <a href="https://github.com/2631-Y">
+        <img src="https://github.com/2631-Y.png" width="80" style="border-radius:50%"/><br/>
+        <b>2631-Y</b>
+      </a><br/>
+      🗄️ Database
+    </td>
+  </tr>
+</table>
 
 </div>
 

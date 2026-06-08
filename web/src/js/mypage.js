@@ -77,5 +77,5 @@ BADGES.forEach(b => {
 function logout() {
   if (!confirm('로그아웃 하시겠어요?')) return;
   localStorage.removeItem(KEY.USER);
-  window.location.href = 'auth.html';
+  window.location.href = '/pages/auth.html';
 }

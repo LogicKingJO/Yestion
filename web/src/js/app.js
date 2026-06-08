@@ -49,7 +49,7 @@ function showToast(msg) {
 
 // ---- Auth guard ----
 function requireAuth() {
-  if (!getUser()) { window.location.href = 'auth.html'; return false; }
+  if (!getUser()) { window.location.href = '/pages/auth.html'; return false; }
   return true;
 }
 
