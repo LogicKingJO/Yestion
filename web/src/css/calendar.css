@@ -1,0 +1,84 @@
+.cal-wrap { max-width: 480px; margin: 0 auto; padding: 0 16px 32px; }
+
+.month-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 0 14px;
+}
+.month-title { font-size: 1.15rem; font-weight: 700; }
+.month-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--primary-light); color: var(--primary);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; font-weight: 700;
+}
+.month-btn:hover { background: #DDE0FF; }
+
+.cal-grid {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.cal-head {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  background: var(--primary-light);
+}
+.cal-head-cell {
+  text-align: center;
+  padding: 10px 0;
+  font-size: 0.78rem; font-weight: 700;
+  color: var(--text-sub);
+}
+.cal-head-cell:first-child { color: #F44336; }
+.cal-head-cell:last-child  { color: #2196F3; }
+
+.cal-body { display: grid; grid-template-columns: repeat(7, 1fr); }
+.cal-cell {
+  aspect-ratio: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer;
+  position: relative;
+  padding: 2px;
+  transition: background 0.15s;
+}
+.cal-cell:hover { background: var(--primary-light); }
+.cal-cell.other-month .day-num { opacity: 0.28; }
+.cal-cell.today .day-num {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+}
+.cal-cell.selected { background: var(--primary-light); }
+
+.day-num { font-size: 0.88rem; font-weight: 600; line-height: 28px; min-width: 28px; text-align: center; }
+.cal-cell:nth-child(7n+1) .day-num { color: #F44336; }
+.cal-cell:nth-child(7n)   .day-num { color: #2196F3; }
+.cal-cell.today .day-num  { color: #fff !important; }
+
+.dot-row { display: flex; gap: 2px; margin-top: 2px; flex-wrap: wrap; justify-content: center; max-width: 28px; }
+.dot { width: 5px; height: 5px; border-radius: 50%; }
+
+.day-detail {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-top: 16px;
+  overflow: hidden;
+}
+.day-detail-header {
+  padding: 14px 18px;
+  background: var(--primary-light);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--primary);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.day-detail-list { padding: 0 16px; }
+.day-detail-empty { padding: 24px 16px; text-align: center; color: var(--text-sub); font-size: 0.9rem; }
+
+.rate-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  position: absolute; bottom: 4px;
+}
