@@ -7,10 +7,10 @@ services:
     ports:
       - "3310:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: yestion1234
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: yestion
-      MYSQL_USER: yestion
-      MYSQL_PASSWORD: yestion1234
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./mysql/data:/var/lib/mysql
     networks:
@@ -44,7 +44,9 @@ services:
     expose:
       - "8080"
     environment:
-      - DATABASE_URL=jdbc:mysql://mysql:3306/yestion?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
     depends_on:
       - mysql
     networks:
