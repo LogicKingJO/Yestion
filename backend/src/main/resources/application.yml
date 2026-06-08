@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    # docker-compose 서비스 이름(mysql)이 곧 호스트
+    url: jdbc:mysql://mysql:3306/yestion?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    username: root
+    password: yestion1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      # create-drop : 실행할 때마다 테이블 새로 생성 (개발 초기)
+      # update      : 변경된 컬럼만 반영 (개발 중반)
+      # validate    : 검증만, 변경 없음 (운영)
+      ddl-auto: update
+    show-sql: true   # 실행되는 SQL을 콘솔에 출력 (학습용)
+    properties:
+      hibernate:
+        format_sql: true
+
+# JWT 시크릿 키 (나중에 .env로 분리 예정)
+jwt:
+  secret: yestion-secret-key-change-this-in-production
+  expiration: 86400000   # 24시간 (ms)
+
+server:
+  port: 8080
