@@ -1,4 +1,4 @@
-if (getUser()) window.location.href = 'index.html';
+if (getUser()) window.location.href = '/pages/index.html';
 
 function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach((b, i) =>
@@ -16,7 +16,7 @@ function handleLogin(e) {
   const found  = stored.find(u => u.email === email && u.password === pw);
   if (!found) { showToast('이메일 또는 비밀번호가 올바르지 않습니다.'); return; }
   saveUser({ email: found.email, name: found.name });
-  window.location.href = 'index.html';
+  window.location.href = '/pages/index.html';
 }
 
 function handleSignup(e) {
@@ -32,5 +32,5 @@ function handleSignup(e) {
   localStorage.setItem('yestion_accounts', JSON.stringify(accounts));
   saveUser({ email, name });
   showToast('회원가입 완료! 환영합니다 😊');
-  setTimeout(() => window.location.href = 'index.html', 800);
+  setTimeout(() => window.location.href = '/pages/index.html', 800);
 }
