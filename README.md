@@ -236,13 +236,6 @@ docker compose logs -f web
 <table>
   <tr>
     <td align="center">
-      <a href="https://github.com/imjemin">
-        <img src="https://github.com/imjemin.png" width="80" style="border-radius:50%"/><br/>
-        <b>imjemin</b>
-      </a><br/>
-      🎨 Frontend · ⚙️ Backend
-    </td>
-    <td align="center">
       <a href="https://github.com/gunobo">
         <img src="https://github.com/gunobo.png" width="80" style="border-radius:50%"/><br/>
         <b>gunobo</b>
