@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yestion - 로그인</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body.no-nav { display: flex; flex-direction: column; min-height: 100vh; background: var(--primary); }
+
+    .auth-top {
+      padding: 60px 24px 32px;
+      text-align: center;
+      color: #fff;
+    }
+    .auth-logo { font-size: 2.4rem; font-weight: 800; letter-spacing: -1px; }
+    .auth-tagline { font-size: 0.95rem; opacity: 0.85; margin-top: 6px; }
+
+    .auth-sheet {
+      flex: 1;
+      background: var(--bg);
+      border-radius: 28px 28px 0 0;
+      padding: 32px 24px 40px;
+    }
+
+    .tab-bar {
+      display: flex;
+      background: var(--primary-light);
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 28px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-sub);
+      transition: all 0.2s;
+    }
+    .tab-btn.active { background: #fff; color: var(--primary); box-shadow: 0 1px 6px rgba(0,0,0,0.10); }
+
+    .auth-form { display: none; }
+    .auth-form.active { display: block; }
+
+    .divider { text-align: center; color: var(--text-sub); font-size: 0.8rem; margin: 8px 0 16px; }
+  </style>
+</head>
+<body class="no-nav">
+  <div class="auth-top">
+    <div class="auth-logo">✅ Yestion</div>
+    <div class="auth-tagline">오늘도 YES 하는 하루를 만들어보세요</div>
+  </div>
+
+  <div class="auth-sheet">
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('login')">로그인</button>
+      <button class="tab-btn" onclick="switchTab('signup')">회원가입</button>
+    </div>
+
+    <!-- Login Form -->
+    <form class="auth-form active" id="login-form" onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label>이메일</label>
+        <input class="input-field" type="email" id="login-email" placeholder="example@email.com" required>
+      </div>
+      <div class="form-group">
+        <label>비밀번호</label>
+        <input class="input-field" type="password" id="login-pw" placeholder="비밀번호 입력" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-full" style="margin-top:8px">로그인</button>
+      <div class="divider">또는</div>
+      <p style="text-align:center;font-size:0.85rem;color:var(--text-sub)">
+        아직 계정이 없으신가요? <a onclick="switchTab('signup')" style="color:var(--primary);font-weight:600;cursor:pointer">회원가입</a>
+      </p>
+    </form>
+
+    <!-- Signup Form -->
+    <form class="auth-form" id="signup-form" onsubmit="handleSignup(event)">
+      <div class="form-group">
+        <label>닉네임</label>
+        <input class="input-field" type="text" id="signup-name" placeholder="닉네임 입력" required maxlength="16">
+      </div>
+      <div class="form-group">
+        <label>이메일</label>
+        <input class="input-field" type="email" id="signup-email" placeholder="example@email.com" required>
+      </div>
+      <div class="form-group">
+        <label>비밀번호</label>
+        <input class="input-field" type="password" id="signup-pw" placeholder="6자 이상" required minlength="6">
+      </div>
+      <div class="form-group">
+        <label>비밀번호 확인</label>
+        <input class="input-field" type="password" id="signup-pw2" placeholder="비밀번호 재입력" required minlength="6">
+      </div>
+      <button type="submit" class="btn btn-primary btn-full" style="margin-top:8px">가입하기</button>
+    </form>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+  <script>
+    if (getUser()) window.location.href = 'index.html';
+
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', (i === 0) === (tab === 'login')));
+      document.getElementById('login-form').classList.toggle('active', tab === 'login');
+      document.getElementById('signup-form').classList.toggle('active', tab === 'signup');
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const pw    = document.getElementById('login-pw').value;
+      // 백엔드 연동 전: localStorage에서 사용자 확인
+      const stored = JSON.parse(localStorage.getItem('yestion_accounts') || '[]');
+      const found  = stored.find(u => u.email === email && u.password === pw);
+      if (!found) { showToast('이메일 또는 비밀번호가 올바르지 않습니다.'); return; }
+      saveUser({ email: found.email, name: found.name });
+      window.location.href = 'index.html';
+    }
+
+    function handleSignup(e) {
+      e.preventDefault();
+      const name  = document.getElementById('signup-name').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const pw    = document.getElementById('signup-pw').value;
+      const pw2   = document.getElementById('signup-pw2').value;
+      if (pw !== pw2) { showToast('비밀번호가 일치하지 않습니다.'); return; }
+      const accounts = JSON.parse(localStorage.getItem('yestion_accounts') || '[]');
+      if (accounts.find(u => u.email === email)) { showToast('이미 사용 중인 이메일입니다.'); return; }
+      accounts.push({ email, name, password: pw });
+      localStorage.setItem('yestion_accounts', JSON.stringify(accounts));
+      saveUser({ email, name });
+      showToast('회원가입 완료! 환영합니다 😊');
+      setTimeout(() => window.location.href = 'index.html', 800);
+    }
+  </script>
+</body>
+</html>
