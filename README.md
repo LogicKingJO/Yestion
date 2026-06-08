@@ -221,9 +221,9 @@ docker compose logs -f web
 
 <div align="center">
 
-| 로그인 |
-|--------|
-| ![auth](web/src/images/auth.png) |
+| 로그인 | 홈 | 달력 | 마이페이지 |
+|--------|-----|------|-----------|
+| ![auth](images/auth.png) | ![index](images/index.png) | ![calendar](images/calendar.png) | ![mypage](images/mypage.png) |
 
 </div>
 
