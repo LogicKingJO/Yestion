@@ -82,6 +82,14 @@
 
 ---
 
+## 🗄️ 테이블 구성
+
+1. **users**(id, email, name, password, created_at) : 회원 정보가 들어감
+2. **categories**(id, user_id, name, color) : 유저가 만든 카테고리 정보가 들어감
+3. **todos**(id, user_id, category_id, title, memo, due_date, date, done, created_at) : 할 일 데이터가 들어감
+
+---
+
 ---
 
 ## 🔌 API 목록
@@ -100,14 +108,6 @@
 | DELETE | `/api/categories/{id}` | 카테고리 삭제 | ✅ | ✅ 완료 |
 
 > 인증이 필요한 요청은 헤더에 `Authorization: Bearer <token>` 을 포함해야 합니다.
-
----
-
-## 🗄️ 테이블 구성
-
-1. **users**(id, email, name, password, created_at) : 회원 정보가 들어감
-2. **categories**(id, user_id, name, color) : 유저가 만든 카테고리 정보가 들어감
-3. **todos**(id, user_id, category_id, title, memo, due_date, date, done, created_at) : 할 일 데이터가 들어감
 
 ---
 
