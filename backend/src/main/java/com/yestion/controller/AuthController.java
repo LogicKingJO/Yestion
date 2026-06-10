@@ -1,10 +1,12 @@
 package com.yestion.controller;
 
 import com.yestion.dto.AuthDto;
+import com.yestion.entity.User;
 import com.yestion.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,5 +27,12 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthDto.LoginResponse> login(@Valid @RequestBody AuthDto.LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
+    }
+
+    // GET /api/auth/me — 토큰 유효성 확인
+    @GetMapping("/me")
+    public ResponseEntity<?> me(@AuthenticationPrincipal User user) {
+        if (user == null) return ResponseEntity.status(401).build();
+        return ResponseEntity.ok().build();
     }
 }

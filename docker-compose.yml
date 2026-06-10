@@ -66,11 +66,15 @@ services:
       - app-network
 
   cloudflared:
-    image: cloudflare/cloudflared:latest
+    build:
+      context: .
+      dockerfile: cloudflared/Dockerfile
     restart: unless-stopped
-    command: tunnel --no-autoupdate run yestion
+    command: tunnel run yestion
     volumes:
       - /Users/imjemin/.cloudflared:/etc/cloudflared:ro
+    depends_on:
+      - nginx
     networks:
       - app-network
 
