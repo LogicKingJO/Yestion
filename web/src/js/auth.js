@@ -1,19 +1,6 @@
-(async () => {
-  if (getToken() && getUser()) {
-    try {
-      const res = await fetch('/api/auth/me', {
-        headers: { 'Authorization': 'Bearer ' + getToken() }
-      });
-      if (res.ok) {
-        window.location.href = '/pages/index.html';
-      } else {
-        clearAuth();
-      }
-    } catch {
-      // 서버 연결 실패 시 토큰 유지하고 auth 페이지 표시
-    }
-  }
-})();
+if (getToken() && getUser()) {
+  window.location.href = '/pages/index.html';
+}
 
 function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach((b, i) =>
