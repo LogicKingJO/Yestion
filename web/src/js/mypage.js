@@ -107,6 +107,15 @@ function renderBadges(todos) {
   });
 }
 
+function toggleAprilFools(enabled) {
+  localStorage.setItem('april_fools', enabled ? 'true' : 'false');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.getElementById('april-toggle');
+  if (toggle) toggle.checked = localStorage.getItem('april_fools') === 'true';
+});
+
 function logout() {
   if (!confirm('로그아웃 하시겠어요?')) return;
   clearAuth();

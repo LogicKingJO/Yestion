@@ -148,3 +148,75 @@ async function deleteTodo(id) {
 }
 
 init();
+
+// 만우절 모드: + 버튼 도망가기
+if (localStorage.getItem('april_fools') === 'true') {
+  const fab = document.querySelector('.fab');
+  const margin = 80;
+
+  const navH = 64;
+  const corners = [
+    { x: margin,                          y: margin },
+    { x: window.innerWidth  - margin,     y: margin },
+    { x: margin,                          y: window.innerHeight - margin - navH },
+    { x: window.innerWidth  - margin,     y: window.innerHeight - margin - navH },
+  ];
+  let currentCorner = -1;
+
+  function teleportOpposite() {
+    const oppositeIndex = [3, 2, 1, 0][currentCorner];
+    const target = corners[oppositeIndex];
+    fab.style.transition = 'none';
+    fab.style.left = target.x + 'px';
+    fab.style.top  = target.y + 'px';
+    currentCorner = oppositeIndex;
+    setTimeout(() => {
+      fab.style.transition = 'left 0.6s ease, top 0.6s ease';
+      fab.style.left = (window.innerWidth  / 2) + 'px';
+      fab.style.top  = (window.innerHeight / 2) + 'px';
+      currentCorner = -1;
+    }, 100);
+    setTimeout(() => { fab.style.transition = 'left 0.2s ease, top 0.2s ease'; }, 600);
+  }
+
+  function escapeFab(clientX, clientY) {
+    const rect = fab.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = clientX - cx;
+    const dy = clientY - cy;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < 120) {
+      const angle = Math.atan2(dy, dx);
+      const nx = cx - Math.cos(angle) * 130;
+      const ny = cy - Math.sin(angle) * 130;
+      const clampedX = Math.max(margin, Math.min(window.innerWidth - margin, nx));
+      const clampedY = Math.max(margin, Math.min(window.innerHeight - margin - navH, ny));
+
+      // 모서리에 막혔는지 감지 (클램핑 전후 차이가 크면 모서리)
+      const stuckX = Math.abs(nx - clampedX) > 20;
+      const stuckY = Math.abs(ny - clampedY) > 20;
+      if (stuckX && stuckY) {
+        // 현재 어느 모서리인지 파악
+        const isRight  = clampedX >= window.innerWidth  - margin - 5;
+        const isBottom = clampedY >= window.innerHeight  - margin - navH - 5;
+        currentCorner = isRight ? (isBottom ? 3 : 1) : (isBottom ? 2 : 0);
+        teleportOpposite();
+        return;
+      }
+
+      fab.style.position = 'fixed';
+      fab.style.transition = 'left 0.2s ease, top 0.2s ease';
+      fab.style.left = clampedX + 'px';
+      fab.style.top  = clampedY + 'px';
+      fab.style.right  = 'unset';
+      fab.style.bottom = 'unset';
+    }
+  }
+
+  document.addEventListener('mousemove', (e) => escapeFab(e.clientX, e.clientY));
+  document.addEventListener('touchmove', (e) => {
+    const t = e.touches[0];
+    escapeFab(t.clientX, t.clientY);
+  }, { passive: true });
+}

@@ -133,7 +133,7 @@ graph TD
 
 | 서비스 | 이미지 | 외부 포트 | 역할 |
 |--------|--------|-----------|------|
-| `nginx` | nginx:alpine | `:80` | 리버스 프록시 |
+| `nginx` | nginx:alpine | `:1009` | 리버스 프록시 |
 | `web` | nginx:alpine | 내부 전용 | 정적 파일 서빙 |
 | `backend` | eclipse-temurin:21 | 내부 전용 | REST API |
 | `mysql` | mysql:8.0 | `:3310` | 데이터베이스 |
