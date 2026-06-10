@@ -23,6 +23,27 @@
 }
 .progress-pct { font-weight: 700; font-size: 1rem; }
 
+.progress-outer {
+  position: relative;
+  padding-top: 40px;
+}
+.progress-runner {
+  position: absolute;
+  bottom: 12px;
+  transform: translateX(-50%) scaleX(-1);
+  transition: left 0.4s ease;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+  line-height: 1;
+}
+@keyframes run-bounce {
+  0%, 100% { transform: translateX(-50%) scaleX(-1) translateY(0); }
+  50%       { transform: translateX(-50%) scaleX(-1) translateY(-3px); }
+}
+.progress-runner.running {
+  animation: run-bounce 0.4s ease infinite;
+}
+
 .todo-section { padding: 0 16px 16px; max-width: 480px; margin: 0 auto; }
 
 .filter-wrapper {

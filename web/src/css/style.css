@@ -141,11 +141,17 @@ textarea.input-field { resize: vertical; min-height: 100px; }
 .fab:hover { transform: scale(1.08); box-shadow: 0 6px 24px rgba(108,99,255,0.50); }
 
 /* ===== Progress Bar ===== */
-.progress-wrap { background: var(--primary-light); border-radius: 99px; height: 12px; overflow: hidden; }
+.progress-wrap { background: var(--primary-light); border-radius: 99px; height: 12px; overflow: hidden; border: 1px solid black}
 .progress-bar {
   height: 100%; border-radius: 99px;
-  background: linear-gradient(90deg, var(--primary), #A78BFA);
+  background: linear-gradient(90deg, #ff0000, #ff7700, #ffff00, #00ff00, #0099ff, #6600ff, #ff0099, #ff0000);
+  background-size: 200% 100%;
+  animation: rainbow 2s linear infinite;
   transition: width 0.4s ease;
+}
+@keyframes rainbow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
 }
 
 /* ===== Todo Item ===== */
