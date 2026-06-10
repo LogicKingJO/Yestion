@@ -103,6 +103,16 @@ function updateProgress() {
   const pct   = total === 0 ? 0 : Math.round(done / total * 100);
   document.getElementById('pct-text').textContent = pct + '%';
   document.getElementById('progress-bar').style.width = pct + '%';
+
+  const runner = document.getElementById('progress-runner');
+  const clampedPct = Math.max(2, Math.min(pct, 98));
+  runner.style.left = clampedPct + '%';
+
+  runner.classList.remove('running');
+  if (pct > 0 && pct < 100) {
+    void runner.offsetWidth;
+    runner.classList.add('running');
+  }
 }
 
 async function toggleTodo(id) {

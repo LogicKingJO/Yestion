@@ -5,6 +5,9 @@ document.getElementById('avatar').textContent        = user.name.charAt(0).toUpp
 document.getElementById('profile-name').textContent  = user.name;
 document.getElementById('profile-email').textContent = user.email;
 
+// Logo 클릭 시 급식알리미 웹사이트로 이동
+document.querySelector('.logo').addEventListener('click', clickLogo);
+
 async function init() {
   try {
     const res = await authFetch('/api/todos');
@@ -108,6 +111,10 @@ function logout() {
   if (!confirm('로그아웃 하시겠어요?')) return;
   clearAuth();
   window.location.href = '/pages/auth.html';
+}
+
+function clickLogo() {
+  window.location.href = 'https://bssm.imjemin.co.kr/';
 }
 
 init();

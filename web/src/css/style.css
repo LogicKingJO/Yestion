@@ -141,7 +141,7 @@ textarea.input-field { resize: vertical; min-height: 100px; }
 .fab:hover { transform: scale(1.08); box-shadow: 0 6px 24px rgba(108,99,255,0.50); }
 
 /* ===== Progress Bar ===== */
-.progress-wrap { background: var(--primary-light); border-radius: 99px; height: 12px; overflow: hidden; }
+.progress-wrap { background: var(--primary-light); border-radius: 99px; height: 12px; overflow: hidden; border: 1px solid black}
 .progress-bar {
   height: 100%; border-radius: 99px;
   background: linear-gradient(90deg, var(--primary), #A78BFA);

@@ -35,6 +35,14 @@
   padding: 18px 16px;
   text-align: center;
 }
+.stat-card2 {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 16px;
+  text-align: center;
+  width: 206%;
+}
 .stat-value { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
 .stat-label { font-size: 0.78rem; color: var(--text-sub); margin-top: 4px; }
 
@@ -64,3 +72,11 @@
 .badge-icon { font-size: 1.8rem; display: block; }
 .badge-name { font-size: 0.75rem; font-weight: 600; margin-top: 6px; color: var(--text); }
 .badge-cond { font-size: 0.68rem; color: var(--text-sub); margin-top: 2px; }
+
+.logo:hover {
+  transform: scale(1.08);
+  box-shadow: 0 3px 12px rgba(108,99,255,0.50);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 50%;
+  cursor: pointer;
+}
