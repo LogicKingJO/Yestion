@@ -151,6 +151,7 @@ init();
 
 // 만우절 모드: + 버튼 도망가기
 if (localStorage.getItem('april_fools') === 'true') {
+  document.body.classList.add('april-mode');
   const fab = document.querySelector('.fab');
   const margin = 80;
 
