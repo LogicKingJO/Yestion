@@ -2,20 +2,7 @@
 
 # ✅ Yestion · 예스션
 
-### *"오늘 해야 할 일에 YES라고 말하는 순간, 당신의 하루가 바뀝니다."*
-
-<br/>
-
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![SpringBoot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![Nginx](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Cloudflare](https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)
-
-<br/>
+## *"오늘 해야 할 일에 YES라고 말하는 순간, 당신의 하루가 바뀝니다."*
 
 🌐 **[yestion.imjemin.co.kr](https://yestion.imjemin.co.kr)** 에서 지금 바로 사용해보세요!
 
@@ -95,16 +82,13 @@
 
 ---
 
-## 🛠️ 기술 스택
+## 🗄️ 테이블 구성
 
-| 분류 | 기술 | 선택 이유 |
-|------|------|-----------|
-| Frontend | HTML5 · CSS3 · Vanilla JS | 프레임워크 없이 웹 표준만으로 구현 |
-| Backend | Spring Boot 3 · Java 21 | 안정적인 REST API, JWT 인증 |
-| Database | MySQL 8.0 | 안정적인 관계형 DB |
-| Web Server | Nginx | 정적 파일 서빙 + 리버스 프록시 |
-| 인프라 | Docker · Docker Compose | 환경 통일, 단일 명령어 실행 |
-| DNS / CDN | Cloudflare | 무료 HTTPS · DDoS 방어 · IP 보호 |
+1. **users**(id, email, name, password, created_at) : 회원 정보가 들어감
+2. **categories**(id, user_id, name, color) : 유저가 만든 카테고리 정보가 들어감
+3. **todos**(id, user_id, category_id, title, memo, due_date, date, done, created_at) : 할 일 데이터가 들어감
+
+---
 
 ---
 
@@ -186,37 +170,6 @@ Yestion/
 
 ---
 
-## ⚡ 빠른 시작
-
-```bash
-# 1. 클론
-git clone https://github.com/LogicKingJO/Yestion.git
-cd Yestion
-
-# 2. 실행 (Docker Desktop 필요)
-docker compose up -d --build
-
-# 3. 접속
-open http://localhost/pages/index.html
-
-# API 문서 확인 (Spring Boot 기동 후)
-open http://localhost/api
-```
-
-```bash
-# 중지
-docker compose down
-
-# 로그 확인
-docker compose logs -f
-
-# 서비스별 로그
-docker compose logs -f backend
-docker compose logs -f web
-```
-
----
-
 ## 📸 미리보기
 
 <div align="center">
@@ -261,3 +214,19 @@ docker compose logs -f web
 **Copyright © 2026 Yestion Team. All rights reserved.**
 
 </div>
+
+
+## STACK
+
+<br/>
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![SpringBoot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![Nginx](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Cloudflare](https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)
+
+<br/>

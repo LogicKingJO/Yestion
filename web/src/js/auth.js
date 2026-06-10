@@ -1,4 +1,6 @@
-if (getToken() && getUser()) window.location.href = '/pages/index.html';
+if (getToken() && getUser()) {
+  window.location.href = '/pages/index.html';
+}
 
 function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach((b, i) =>
